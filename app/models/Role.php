@@ -1,18 +1,14 @@
 <?php
 
-    class Agency {
+    class Role {
         private $id;
-        private $longitude;
-        private $latitude;
-        private $bankId;
-        private Address $address;
+        private $userId;
+        private $roleId;
 
-        public function __construct($id, $longitude, $latitude, $bankId, Address $address){
+        public function __construct($id, $userId, $roleId){
             $this->id = $id;
-            $this->longitude = $longitude;
-            $this->latitude = $latitude;
-            $this->bankId = $bankId;
-            $this->address = $address;
+            $this->userId = $userId;
+            $this->roleId = $roleId;
         }
 
         public function __get($property) {
@@ -26,7 +22,6 @@
                 $this->$property = $value;
             }
         }
-
     }
 
 ?>

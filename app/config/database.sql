@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS address (
     street VARCHAR(50),
     postal_code VARCHAR(10),
     email VARCHAR(50),
-    telephone INT,
-    date TIMESTAMP
+    telephone INT
 );
 
 -- Permission Taqle
@@ -68,7 +67,7 @@ CREATE TABLE IF NOT EXISTS user (
     gendre VARCHAR(50),
     address_id VARCHAR(50),
     agency_id VARCHAR(50),
-    date TIMESTAMP,
+    deleted ENUM('1','0')
     FOREIGN KEY (address_id) REFERENCES address(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (agency_id) REFERENCES agency(id) ON DELETE CASCADE ON UPDATE CASCADE
 

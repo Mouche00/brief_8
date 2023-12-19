@@ -1,14 +1,9 @@
 <?php
 
-    class Bank {
-        private $id;
-        private $name;
-        private $logo;
+    class CheckingAccount extends Account {
 
-        public function __construct($id, $name, $logo){
-            $this->id = $id;
-            $this->name = $name;
-            $this->logo = $logo;
+        public function __construct($id, $rib, $currency, $balance, $userId) {
+            parent::__construct($id, $rib, $currency, $balance, $userId);
         }
 
         public function __get($property) {
@@ -22,6 +17,7 @@
                 $this->$property = $value;
             }
         }
+
     }
 
 ?>

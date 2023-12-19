@@ -1,18 +1,18 @@
 <?php
 
-    class Agency {
+    class Atm {
         private $id;
         private $longitude;
         private $latitude;
         private $bankId;
-        private Address $address;
+        private $addressId;
 
-        public function __construct($id, $longitude, $latitude, $bankId, Address $address){
+        public function __construct($id, $longitude, $latitude, $bankId, $addressId){
             $this->id = $id;
             $this->longitude = $longitude;
             $this->latitude = $latitude;
             $this->bankId = $bankId;
-            $this->address = $address;
+            $this->addressId = $addressId;
         }
 
         public function __get($property) {

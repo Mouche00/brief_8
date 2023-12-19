@@ -5,4 +5,7 @@
     define("USER", "root");
     define("PASS", "root");
 
+    define("APPROOT", $_SERVER['REQUEST_URI'] . "/../../");
+
+
 ?>
