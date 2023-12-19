@@ -3,7 +3,7 @@
     require("IBankService.php");
     require("Database.php");
 
-    class UserService extends Database implements IBankService {
+    class BankService extends Database implements IBankService {
 
         public function create(Bank $bank){
 
@@ -66,18 +66,76 @@
             }
         }
 
-        public function read(){
+        public function read(Datatable $datatable){
 
             $db = $this->connect();
 
+            $searchArray = array();
+            $searchQuery = " ";
+
+
+            $draw = $datatable->draw;
+            $row = $datatable->row;
+            $rowPerPage = $datatable->rowPerPage;
+            $columnName = $datatable->columnName;
+            $columnSortOrder = $datatable->columnSortOrder;
+            $searchValue = $datatable->searchValue;
+
+            if($searchValue != ''){
+                $searchQuery = " AND (id LIKE :id OR 
+                        name LIKE :name) ";
+                $searchArray = array( 
+                        'id'=>"%$searchValue%",
+                        'name'=>"%$searchValue%"
+                );
+            }
+    
             try {
-                $sql = "SELECT * FROM bank";
-                $query = $db->query($sql);
-                $data = $query->fetchAll(PDO::FETCH_ASSOC);
-                return $data;
+                $stmt = $db->prepare("SELECT COUNT(*) AS allcount FROM bank ");
+                $stmt->execute();
+                $records = $stmt->fetch();
+                $totalRecords = $records['allcount'];
+            
+                $stmt = $db->prepare("SELECT COUNT(*) AS allcount FROM bank WHERE 1 ".$searchQuery);
+                $stmt->execute($searchArray);
+                $records = $stmt->fetch();
+                $totalRecordwithFilter = $records['allcount'];
+
+                $stmt = $db->prepare("SELECT * FROM bank WHERE 1 ".$searchQuery." ORDER BY ".$columnName." ".$columnSortOrder." LIMIT :limit,:offset");
+
+                foreach ($searchArray as $key=>$search) {
+                    $stmt->bindValue(':'.$key, $search,PDO::PARAM_STR);
+                }
+
+                $stmt->bindValue(':limit', (int)$row, PDO::PARAM_INT);
+                $stmt->bindValue(':offset', (int)$rowPerPage, PDO::PARAM_INT);
+                $stmt->execute();
+                $records = $stmt->fetchAll();
+
             } catch (PDOException $e){
                 die("Error: " . $e->getMessage());
             }
+
+            $data = array();
+
+            foreach ($records as $row) {
+                $data[] = array(
+                    "id"=>$row['id'],
+                    "name"=>$row['name'],
+                    "logo"=>$row['logo']
+                );
+            }
+
+            // Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+
+            return $response;
         }
 
     }
+?>

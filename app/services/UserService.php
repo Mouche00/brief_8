@@ -36,7 +36,8 @@
                 $stmt->bindParam(":postal_code", $postalCode);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":telephone", $telephone);
-                $stmt->bindParam(":date", $date);
+
+                $stmt->execute();
 
                 $sql = "INSERT INTO user VALUES (:id, :username, :password, :nationality, :gendre, :address_id, :agency_id)";
 
@@ -88,7 +89,8 @@
                 $stmt->bindParam(":postal_code", $postalCode);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":telephone", $telephone);
-                $stmt->bindParam(":date", $date);
+
+                $stmt->execute();
 
                 $sql = "UPDATE user SET username = :username, password = :password, nationality = :nationality, gendre = :gendre, agency_id = :agency_id WHERE id = :id";
 

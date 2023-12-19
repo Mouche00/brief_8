@@ -1,16 +1,15 @@
 <?php
 
-    class Transaction {
-        private $id;
-        private $type;
-        private $amount;
-        private $accountId;
+    class Datatable {
+        private $draw;
+        private $row;
+        private $rowPerPage;
+        private $columnName;
+        private $columnSortOrder;
+        private $searchValue;
 
-        public function __construct($id, $type, $amount, $accountId){
-            $this->id = $id;
-            $this->type = $type;
-            $this->amount = $amount;
-            $this->accountId = $accountId;
+        function __construct(){
+            
         }
 
         public function __get($property) {

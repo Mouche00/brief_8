@@ -5,6 +5,7 @@
         function update(Bank $bank);
         function delete($id);
         function read();
+        function search($id);
     }
 
 ?>
